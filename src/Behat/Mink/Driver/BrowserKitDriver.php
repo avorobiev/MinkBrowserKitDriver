@@ -121,7 +121,8 @@ class BrowserKitDriver implements DriverInterface
      */
     public function getCurrentUrl()
     {
-        return $this->client->getRequest()->getUri();
+        $request = $this->client->getRequest();
+        return $request instanceof \Symfony\Component\BrowserKit\Request ? $request->getUri() : null;
     }
 
     /**
@@ -701,7 +702,7 @@ class BrowserKitDriver implements DriverInterface
     {
         throw new UnsupportedDriverActionException('Window resizing is not supported by %s', $this);
     }
-    
+
     /**
      * Checks whether element visible located by it's XPath query.
      *
@@ -781,7 +782,7 @@ class BrowserKitDriver implements DriverInterface
 
                 return array_pop($field);
             }
-            
+
             return $this->forms[$formId][$fieldName];
         }
 
